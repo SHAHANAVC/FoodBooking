@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point of Sale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 30%;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .order-items {
+            flex-grow: 1;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item .name {
+            font-weight: bold;
+        }
+
+        .order-item .price {
+            color: #333;
+        }
+
+        .order-note {
+            background-color: #f5f5d5;
+            padding: 5px;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .total {
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .taxes {
+            font-size: 0.9em;
+            color: #666;
+            padding: 0 10px;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .sidebar-actions button {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sidebar-actions .customer {
+            background-color: #6b3e8e;
+            color: white;
+        }
+
+        .sidebar-actions .note, .sidebar-actions .split {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #6b3e8e;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .sidebar-footer .guests {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-footer .guests span {
+            margin: 0 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            width: 70%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #6b3e8e;
+        }
+
+        .header .user {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .user img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .menu-tabs {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .menu-tabs button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #f0f0f0;
+            margin-right: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .menu-tabs button.active {
+            background-color: #6b3e8e;
+            color: white;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 10px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .menu-item .name {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .controls .quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .controls .quantity button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .controls .quantity input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+
+        .controls .discount {
+            display: flex;
+            align-items: center;
+        }
+
+        .controls .discount button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .controls .price {
+            font-weight: bold;
+            padding: 5px 10px;
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            width: 200px;
+        }
+
+        .calculator button {
+            padding: 10px;
+            border: none;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .calculator button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .calculator button.clear {
+            background-color: #ff4d4d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="order-items">
+                <div class="order-item">
+                    <span class="name">Pasta 4 formaggi</span>
+                    <span class="price">$6.33</span>
+                </div>
+                <div class="order-item">
+                    <span class="name">1.00 Units x $6.33 / Units</span>
+                </div>
+                <div class="order-item">
+                    <span class="name">Vegetarian</span>
+                    <span class="price">$8.05</span>
+                </div>
+                <div class="order-item">
+                    <span class="name">1.00 Units x $8.05 / Units</span>
+                </div>
+                <div class="order-note">No pepper on pizza</div>
+                <div class="order-item">
+                    <span class="name">Ice Tea</span>
+                    <span class="price">$2.53</span>
+                </div>
+                <div class="order-item">
+                    <span class="name">1.00 Units x $2.53 / Units</span>
+                </div>
+            </div>
+            <div class="total">
+                TOTAL: $25.54
+                <div class="taxes">TAXES: $3.34</div>
+            </div>
+            <div class="sidebar-actions">
+                <button class="refund">Refund</button>
+                <button class="customer">Alexa Laza</button>
+                <button class="note">Customer Note</button>
+                <button class="split">Split</button>
+            </div>
+            <div class="sidebar-footer">
+                <div class="guests">
+                    <span>2</span>
+                    <span>Dine-in Guests</span>
+                </div>
+                <button>Transfer</button>
+                <button>Enter Code</button>
+                <button>Reward</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="logo">odoo</div>
+                <div class="user">
+                    <img src="https://via.placeholder.com/30" alt="User">
+                    <span>Mitchell Admin</span>
+                </div>
+            </div>
+            <div class="menu-tabs">
+                <button class="active">Food</button>
+                <button>Search product</button>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Bacon Burger">
+                    <div class="name">Bacon Burger</div>
+                    <div class="price">$8.63</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Cheese Burger">
+                    <div class="name">Cheese Burger</div>
+                    <div class="price">$8.05</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Chicken Curry Sandwich">
+                    <div class="name">Chicken Curry Sandwich</div>
+                    <div class="price">$3.45</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Club Sandwich">
+                    <div class="name">Club Sandwich</div>
+                    <div class="price">$3.91</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Funghi">
+                    <div class="name">Funghi</div>
+                    <div class="price">$8.05</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Lunch Menu 18pc">
+                    <div class="name">Lunch Menu 18pc</div>
+                    <div class="price">$13.80</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Lunch Salmon 20pc">
+                    <div class="name">Lunch Salmon 20pc</div>
+                    <div class="price">$15.87</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Lunch Temaki mix 3pc">
+                    <div class="name">Lunch Temaki mix 3pc</div>
+                    <div class="price">$16.10</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Margherita">
+                    <div class="name">Margherita</div>
+                    <div class="price">$8.05</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Mozzarella Sandwich">
+                    <div class="name">Mozzarella Sandwich</div>
+                    <div class="price">$4.49</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Pasta 4 formaggi">
+                    <div class="name">Pasta 4 formaggi</div>
+                    <div class="price">$6.33</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Pasta Bolognese">
+                    <div class="name">Pasta Bolognese</div>
+                    <div class="price">$5.18</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Salmon and Avocado">
+                    <div class="name">Salmon and Avocado</div>
+                    <div class="price">$10.64</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Spicy Tuna Sandwich">
+                    <div class="name">Spicy Tuna Sandwich</div>
+                    <div class="price">$3.45</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/100" alt="Vegetarian">
+                    <div class="name">Vegetarian</div>
+                    <div class="price">$8.05</div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="quantity">
+                    <button>Drinks 1 | Food 3</button>
+                </div>
+                <div class="calculator">
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button class="clear">C</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>6</button>
+                    <button>%</button>
+                    <button>7</button>
+                    <button>8</button>
+                    <button>9</button>
+                    <button>Price</button>
+                    <button>+/-</button>
+                    <button>0</button>
+                    <button>.</button>
+                    <button>OK</button>
+                </div>
+                <div class="quantity">
+                    <button>-</button>
+                    <input type="text" value="0" readonly>
+                    <button>+</button>
+                </div>
+                <div class="discount">
+                    <button>Quotation/Order</button>
+                </div>
+                <div class="discount">
+                    <button>% Disc</button>
+                </div>
+                <div class="price">
+                    Price
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
