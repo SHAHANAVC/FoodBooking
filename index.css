@@ -1,246 +1,291 @@
- * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-        body {
-            background-color: #f0f2f5;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+body {
+  background-color: #f0f2f5;
+  /* display: flex; */
+  min-height: 100vh;
+  overflow: hidden;
+}
 
-        .container {
-            display: flex;
-            width: 100%;
-        }
+.container {
+  display: flex;
+  width: 100%;
+}
 
-        /* Sidebar */
-        .sidebar {
-            width: 30%;
-            background-color: #fff;
-            border-right: 1px solid #ddd;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+/* Sidebar */
+.sidebar {
+  width: 30%;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  height: 99vh;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
 
-        .order-items {
-            flex-grow: 1;
-        }
+.order-items {
+  flex-grow: 1;
+  overflow: auto;
+}
 
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
 
-        .order-item .name {
+.order-item .name {
+  font-weight: bold;
+}
+
+.order-item .price {
+  color: #333;
+}
+
+.order-note {
+  background-color: #f5f5d5;
+  padding: 5px;
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.total {
+  /* font-size: 1.2em;
             font-weight: bold;
-        }
-
-        .order-item .price {
-            color: #333;
-        }
-
-        .order-note {
-            background-color: #f5f5d5;
-            padding: 5px;
-            margin: 5px 0;
-            font-size: 0.9em;
-        }
-
-        .total {
-            font-size: 1.2em;
-            font-weight: bold;
             padding: 10px;
-            border-top: 1px solid #ddd;
-        }
+            border-top: 1px solid #ddd; */
+            text-align: end;
+}
 
-        .taxes {
-            font-size: 0.9em;
+.taxes {
+  font-size: 0.9em;
             color: #666;
             padding: 0 10px;
-        }
+}
 
-        .sidebar-actions {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-        }
+.sidebar-actions {
+  display: flex;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  padding: 10px;
+}
 
-        .sidebar-actions button {
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.sidebar-actions button {
+  width: 80px;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-        .sidebar-actions .customer {
-            background-color: #6b3e8e;
-            color: white;
-        }
-
+.sidebar-actions button:hover {
+  background-color: #6b3e8e;
+  color: white;
+}
+/* 
         .sidebar-actions .note, .sidebar-actions .split {
             background-color: #f0f0f0;
-        }
+        } */
 
-        .sidebar-footer {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #6b3e8e;
-            color: white;
-            border-radius: 5px;
-        }
+.sidebar-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #6b3e8e;
+  color: white;
+  border-radius: 5px;
+}
 
-        .sidebar-footer .guests {
-            display: flex;
-            align-items: center;
-        }
+.sidebar-footer .guests {
+  display: flex;
+  align-items: center;
+}
 
-        .sidebar-footer .guests span {
-            margin: 0 5px;
-        }
+.sidebar-footer .guests span {
+  margin: 0 5px;
+}
 
-        /* Main Content */
-        .main-content {
-            width: 70%;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-        }
+/* Main Content */
+.main-content {
+  width: 70%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-        }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
 
-        .header .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #6b3e8e;
-        }
+.header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #6b3e8e;
+}
 
-        .header .user {
-            display: flex;
-            align-items: center;
-        }
+.header .user {
+  display: flex;
+  align-items: center;
+}
 
-        .header .user img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+.header .user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
 
-        .menu-tabs {
-            display: flex;
-            padding: 10px;
-            background-color: #fff;
-        }
+.menu-tabs {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+}
 
-        .menu-tabs button {
-            padding: 8px 15px;
-            border: none;
-            background-color: #f0f0f0;
-            margin-right: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.menu-tabs button {
+  padding: 8px 15px;
+  border: none;
+  background-color: #f0f0f0;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-        .menu-tabs button.active {
-            background-color: #6b3e8e;
-            color: white;
-        }
-        .menu-tabs input{
-            border-radius: 5px;
-            padding:0px 10px;
-        }
-        .menu-items {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            padding: 10px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
+.menu-tabs button.active {
+  background-color: #6b3e8e;
+  color: white;
+}
+.menu-tabs input {
+  border-radius: 5px;
+  padding: 0px 10px;
+  width: 100%;
+}
+.menu-items {
+  /* display: grid; */
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: repeat(5, 1fr); */
+  gap: 10px;
+  padding: 10px;
+  flex-grow: 1;
+  /* overflow-y: auto; */
+  overflow: auto;
+}
 
-        .menu-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-        }
+.menu-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  height: 180px;
+  width: 150px;
+}
 
-        .menu-item img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
+.menu-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
 
-        .menu-item .name {
-            font-size: 0.9em;
-            margin: 5px 0;
-        }
+.menu-item .name {
+  font-size: 0.9em;
+  margin: 5px 0;
+}
 
-        .menu-item .price {
-            font-weight: bold;
-            color: #333;
-        }
+.menu-item .price {
+  font-weight: bold;
+  color: #333;
+}
 
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-        }
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+}
 
-        .controls .quantity {
-            display: flex;
-            align-items: center;
-        }
+.controls .quantity {
+  display: flex;
+  align-items: center;
+}
 
-        .controls .quantity button {
-            padding: 5px 10px;
-            border: none;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
+.controls .quantity button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
 
-        .controls .quantity input {
-            width: 40px;
-            text-align: center;
-            border: 1px solid #ddd;
-            margin: 0 5px;
-        }
+.controls .quantity input {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+}
 
-        .controls .discount {
-            display: flex;
-            align-items: center;
-        }
+.controls .discount {
+  display: flex;
+  align-items: center;
+}
 
-        .controls .discount button {
-            padding: 5px 10px;
-            border: none;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
+.controls .discount button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
 
-        .controls .price {
-            font-weight: bold;
-            padding: 5px 10px;
-        }
+.controls .price {
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.calculator {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.calculator input {
+  width: 100%;
+  font-size: 1.2em;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.calc-buttons button {
+  padding: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.calc-buttons button:hover {
+  background-color: #ccc;
+}
